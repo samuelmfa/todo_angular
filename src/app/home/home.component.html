@@ -1,0 +1,111 @@
+<article>
+  <section class="bg-dark">
+    <h3 class="ml-2 text-light p-3">WebApp / Todo</h3>
+  </section>
+</article>
+<article class="container mt-1">
+  <section class="mt-3">
+    <div class="row">
+      <div class="col-sm-12 ">
+        <form [formGroup]="formulario" (ngSubmit)="salvarTarefa()">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="text-success">Cadastrar de Tarefas</h4>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-12 col-lg-6">
+                  <div class="form-group">
+                    <label>Nome da Tarefa</label>
+                    <input class="form-control" formControlName="nome" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div>
+                <button class="btn btn-success" type="submit" [disabled]="!formulario.valid">
+                  <i class="fas fa-plus-circle"></i>
+                  <span> Nova Tarefa</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-12 col-lg-6 my-3">
+        <div class="card">
+          <div class="card-header bg-success">
+            <h5 class="text-white">Em Andamento</h5>
+          </div>
+          <div class="card-body">
+            <table class="table">
+              <thead class="text-center">
+                <tr>
+                  <th>Tarefa</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                <ng-container *ngFor="let tarefa of listaTarefas">
+                  <tr *ngIf="tarefa.status !== 'concluido'">
+                    <td>{{tarefa.nome}}</td>
+                    <td>
+                      <p>{{tarefa.status}}</p>
+                    </td>
+                    <td class="d-flex justify-content-center align-items-center">
+                      <a class="link ml-3" tooltip="Concluir" (click)="editarTarefa(tarefa, 'concluido')">
+                        <i class="fas fa-check text-success fa-lg"></i>
+                      </a>
+                      <a class="link ml-3" tooltip="Excluir" (click)="excluirTarefa(tarefa)">
+                        <i class="fas fa-trash-alt fa-lg text-danger"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </ng-container>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-lg-6 my-3">
+        <div class="card">
+          <div class="card-header bg-warning">
+            <h5 class="text-white">Concluídas</h5>
+          </div>
+          <div class="card-body">
+            <table class="table">
+              <thead class="text-center">
+                <tr>
+                  <th>Tarefa</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                <ng-container *ngFor="let tarefa of listaTarefas">
+                  <tr *ngIf="tarefa.status === 'concluido'">
+                    <td><s>{{tarefa.nome}}</s></td>
+                    <td>
+                      <p><s>{{tarefa.status}}</s></p>
+                    </td>
+                    <td class="d-flex justify-content-center align-items-center">
+                      <a class="link ml-3" tooltip="retomar">
+                        <i class="fas fa-undo-alt fa-lg text-warning" (click)="editarTarefa(tarefa, 'inicio')"></i>
+                      </a>
+                      <a class="link ml-3" tooltip="Excluir" (click)="excluirTarefa(tarefa)">
+                        <i class="fas fa-trash-alt fa-lg text-danger"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</article>
