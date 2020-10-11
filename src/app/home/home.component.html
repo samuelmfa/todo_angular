@@ -1,0 +1,20 @@
+<article>
+  <app-nav-bar></app-nav-bar>
+</article>
+<article class="container mt-1">
+  <section class="mt-3">
+    <div class="row">
+      <div class="col-sm-12 ">
+        <app-card-formulario (atualizar)="recebeAcao($event)"></app-card-formulario>
+      </div>
+      <div class="col-sm-12 col-lg-6 my-3">
+        <app-card-tarefas [tipo]="'inicio'" [titulo]="{andamento: true}" [lista-tarefas]="listaTarefas" (acao)="recebeAcao($event)">
+        </app-card-tarefas>
+      </div>
+      <div class="col-sm-12 col-lg-6 my-3">
+        <app-card-tarefas [tipo]="'concluido'" [titulo]="{concluido: true}" [lista-tarefas]="listaTarefas" (acao)="recebeAcao($event)">
+        </app-card-tarefas>
+      </div>
+    </div>
+  </section>
+</article>

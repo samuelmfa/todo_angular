@@ -1,0 +1,25 @@
+<form [formGroup]="formulario" (ngSubmit)="salvarTarefa()">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="text-success">Cadastrar de Tarefas</h4>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-12 col-lg-6">
+          <div class="form-group">
+            <label>Nome da Tarefa</label>
+            <input class="form-control" formControlName="nome" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div>
+        <button class="btn btn-success" type="submit" [disabled]="!formulario.valid">
+          <i class="fas fa-plus-circle"></i>
+          <span> Nova Tarefa</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,42 @@
+import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Tarefa } from '../models/tarefa.model';
+import { ApiService } from './../services/api.service';
+import { map } from 'rxjs/operators';
+
+@Injectable()
+export class HomeService {
+
+  constructor(
+    protected apiService: ApiService
+  ) { }
+
+  public recebeAcao(evento: any) {
+    switch (evento.acao) {
+      case ('concluido'):
+        return this.editarTarefa(evento.tarefa, 'concluido');
+      case ('inicio'):
+        return this.editarTarefa(evento.tarefa, 'inicio');
+      case ('excluir'):
+        return this.excluirTarefa(evento.tarefa);
+      case ('atualizar'):
+        return this.buscarTarefas();
+      default:
+        break;
+    }
+  }
+
+  public buscarTarefas(): Observable<any> {
+    return this.apiService.buscarTarefas();
+  }
+
+  protected editarTarefa(tarefa: Tarefa, status: string): Observable<any> {
+    tarefa.status = status;
+    return this.apiService.editarTarefa(tarefa).pipe(map((response: any) => response));
+  }
+
+  protected excluirTarefa(tarefa: Tarefa): Observable<any> {
+   return this.apiService.excluirTarefa(tarefa).pipe(map((response: any) => response));
+  }
+
+}
