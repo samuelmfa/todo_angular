@@ -1,0 +1,57 @@
+<div class="card">
+  <div *ngIf="titulo.andamento" class="card-header bg-success">
+    <h5 class="text-white">Em Andamento</h5>
+  </div>
+  <div *ngIf="titulo.concluido" class="card-header bg-warning">
+    <h5 class="text-white">Concluídas</h5>
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <thead class="text-center">
+        <tr>
+          <th>Tarefa</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <ng-container *ngIf="titulo.andamento">
+          <ng-container *ngFor="let tarefa of listaDeTarefas">
+            <tr *ngIf="tarefa.status === tipo">
+              <td>{{tarefa.nome}}</td>
+              <td>
+                <p>{{tarefa.status}}</p>
+              </td>
+              <td class="d-flex justify-content-center align-items-center">
+                <a class="link ml-3" tooltip="Concluir" (click)="editarTarefa(tarefa, 'concluido')">
+                  <i class="fas fa-check text-success fa-lg"></i>
+                </a>
+                <a class="link ml-3" tooltip="Excluir" (click)="excluirTarefa(tarefa, 'excluir')">
+                  <i class="fas fa-trash-alt fa-lg text-danger"></i>
+                </a>
+              </td>
+            </tr>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="titulo.concluido">
+          <ng-container *ngFor="let tarefa of listaDeTarefas">
+            <tr *ngIf="tarefa.status === tipo">
+              <td><s>{{tarefa.nome}}</s></td>
+              <td>
+                <p><s>{{tarefa.status}}</s></p>
+              </td>
+              <td class="d-flex justify-content-center align-items-center">
+                <a class="link ml-3" tooltip="retomar">
+                  <i class="fas fa-undo-alt fa-lg text-warning" (click)="editarTarefa(tarefa, 'inicio')"></i>
+                </a>
+                <a class="link ml-3" tooltip="Excluir" (click)="excluirTarefa(tarefa, 'excluir')">
+                  <i class="fas fa-trash-alt fa-lg text-danger"></i>
+                </a>
+              </td>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

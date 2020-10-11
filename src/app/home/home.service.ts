@@ -1,36 +1,42 @@
-import { Tarefa } from './../models/tarefa.model';
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Tarefa } from '../models/tarefa.model';
+import { ApiService } from './../services/api.service';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class HomeService {
 
-  public header = {
-    headers: new HttpHeaders({
-      'Content-type': 'application/json'
-    })
-  };
+  constructor(
+    protected apiService: ApiService
+  ) { }
 
-  protected API_URL = 'https://5f6cad8834d1ef0016d586f7.mockapi.io/api/v1/dados/todo';
-
-  constructor(public http: HttpClient) { }
-
-  buscarTarefas(): Observable<any> {
-    return this.http.get(`${this.API_URL}`, this.header);
+  public recebeAcao(evento: any) {
+    switch (evento.acao) {
+      case ('concluido'):
+        return this.editarTarefa(evento.tarefa, 'concluido');
+      case ('inicio'):
+        return this.editarTarefa(evento.tarefa, 'inicio');
+      case ('excluir'):
+        return this.excluirTarefa(evento.tarefa);
+      case ('atualizar'):
+        return this.buscarTarefas();
+      default:
+        break;
+    }
   }
 
-  salvarTarefa(tarefa: Tarefa) {
-    return this.http.post(`${this.API_URL}`, tarefa, this.header);
+  public buscarTarefas(): Observable<any> {
+    return this.apiService.buscarTarefas();
   }
 
-  editarTarefa(tarefa: Tarefa) {
-    return this.http.put(`${this.API_URL}/${tarefa.id}`, tarefa, this.header);
+  protected editarTarefa(tarefa: Tarefa, status: string): Observable<any> {
+    tarefa.status = status;
+    return this.apiService.editarTarefa(tarefa).pipe(map((response: any) => response));
   }
 
-  excluirTarefa(tarefa: Tarefa) {
-    return this.http.delete(`${this.API_URL}/${tarefa.id}`, this.header);
+  protected excluirTarefa(tarefa: Tarefa): Observable<any> {
+   return this.apiService.excluirTarefa(tarefa).pipe(map((response: any) => response));
   }
-
 
 }

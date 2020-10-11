@@ -1,3 +1,4 @@
+import { ComponentsModule } from './../components/components.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HomeService } from './home.service';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
@@ -16,6 +17,7 @@ describe('O component Home', () => {
       declarations: [HomeComponent],
       imports: [
         CommonModule,
+        ComponentsModule,
         HomeRoutingModule,
         SharedModule,
         HttpClientTestingModule
