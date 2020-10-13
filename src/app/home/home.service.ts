@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 export class HomeService {
 
   constructor(
-    protected apiService: ApiService
+    public apiService: ApiService
   ) { }
 
   public recebeAcao(evento: any) {
@@ -30,12 +30,12 @@ export class HomeService {
     return this.apiService.buscarTarefas();
   }
 
-  protected editarTarefa(tarefa: Tarefa, status: string): Observable<any> {
+  public editarTarefa(tarefa: Tarefa, status: string): Observable<any> {
     tarefa.status = status;
     return this.apiService.editarTarefa(tarefa).pipe(map((response: any) => response));
   }
 
-  protected excluirTarefa(tarefa: Tarefa): Observable<any> {
+  public excluirTarefa(tarefa: Tarefa): Observable<any> {
    return this.apiService.excluirTarefa(tarefa).pipe(map((response: any) => response));
   }
 
