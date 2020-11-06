@@ -1,7 +1,9 @@
+import { ApiService } from './../services/api.service';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from './home.service';
 import { Tarefa } from './../models/tarefa.model';
+import { Store } from '../store/todo.store';
 
 export interface Dados {
   perfilA: string;
@@ -19,7 +21,7 @@ export class HomeComponent implements OnInit {
 
   public listaTarefas: Tarefa[] | any;
   public retornoUrl: any;
-  public chave = "url.hub.teste2";
+  public chave = "url.hub.todo";
   public linkUrl: string;
 
   public dados: Dados[] = [
@@ -33,12 +35,6 @@ export class HomeComponent implements OnInit {
       perfilA: 'FINACEIRO',
       perfilB: 'DIRETORIA',
       valorAlcada: 3000
-
-    },
-    {
-      perfilA: 'MARKETING',
-      perfilB: 'DIRETORIA',
-      valorAlcada: 6000
 
     },
     {
@@ -56,14 +52,19 @@ export class HomeComponent implements OnInit {
     },
   ];
 
+  tarefas$: Observable<any>;
+
   constructor(
     public homeService: HomeService,
+    public apiService: ApiService,
+    public store: Store
   ) { }
 
   ngOnInit(): void {
     this.buscarTarefas();
+
+
     let result = this.validaDados(this.dados);
-    console.log(result);
     this.buscaValorJson();
   }
 
@@ -86,14 +87,17 @@ export class HomeComponent implements OnInit {
   }
 
   buscarTarefas(): void {
-    this.homeService.buscarTarefas().subscribe((resposta: any) => {
-      this.listaTarefas = resposta;
-    }, erro => console.log(erro));
+    // this.apiService.buscarTarefas$().subscribe((resp) => {
+    //   this.listaTarefas = resp;
+    // });
+
+    // this.homeService.buscarTarefas().subscribe((resposta: any) => {
+    //   this.listaTarefas = resposta;
+    // }, erro => console.log(erro));
 
   }
   recebeAcao($event) {
     this.homeService.recebeAcao($event).subscribe(() => this.buscarTarefas());
-
   }
 
   buscaValorJson() {
@@ -104,6 +108,11 @@ export class HomeComponent implements OnInit {
 
   carregaValor(lista: any, chave: string) {
     return this.linkUrl = lista[chave];
+  }
+
+  lerDaStore() {
+    let lista = this.store.getTodoList();
+    lista.subscribe((resp) => console.log(resp));
   }
 
 }

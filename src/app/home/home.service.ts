@@ -4,6 +4,7 @@ import { Tarefa } from '../models/tarefa.model';
 import { ApiService } from './../services/api.service';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { Store } from '../store/todo.store';
 
 @Injectable()
 export class HomeService extends ApiService {
@@ -12,8 +13,11 @@ export class HomeService extends ApiService {
 
   constructor(
     public apiService: ApiService,
-    public http: HttpClient
-  ) { super(http) }
+    public http: HttpClient,
+    public store: Store
+  ) {
+    super(http, store);
+   }
 
   public recebeAcao(evento: any) {
     switch (evento.acao) {

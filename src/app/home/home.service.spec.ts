@@ -45,16 +45,17 @@ describe('O Serviço HomeService', () => {
 
     evento.forEach((elemento) => {
       const resultado = service.recebeAcao(elemento);
+      tick();
       expect(resultado).toEqual(mockObservableTarefa);
     });
-    tick();
+
   }));
 
   it('deve editar uma tarefa', fakeAsync(() => {
 
     spyOn(apiService, 'editarTarefa').and.callFake(() => tarefaEditada.getData());
 
-    service.editarTarefa(tarefa, 'concluido').subscribe((resp) => {
+    service.editarTarefa(tarefa).subscribe((resp) => {
       expect(resp).toEqual(tarefaMock);
     });
     tick();

@@ -7,11 +7,13 @@ import { CardTarefasComponent } from './card-tarefas/card-tarefas.component';
 import { CardFormularioComponent } from './card-formulario/card-formulario.component';
 
 import { ApiService } from '../services/api.service';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [NavBarComponent, CardTarefasComponent, CardFormularioComponent],
   imports: [
     CommonModule,
+    RouterModule,
     SharedModule
   ],
   exports: [

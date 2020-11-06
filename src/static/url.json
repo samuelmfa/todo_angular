@@ -1,5 +1,5 @@
 {
-  "url.hub.teste1": "/hub/teste/superteste1",
+  "url.hub.todo": "https://5f6cad8834d1ef0016d586f7.mockapi.io/api/v1/dados/todo",
   "url.hub.teste2": "/hub/teste/superteste2",
   "url.hub.teste3": "/hub/teste/superteste3"
 }
